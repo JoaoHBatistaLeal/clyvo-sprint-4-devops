@@ -251,7 +251,7 @@ app.MapGet("/", () => Results.Ok(new
 .WithTags("Health")
 .AllowAnonymous();
 
-app.MapGet("/wellcome", () => Results.Text("ClyvoVet Sprint 4 - CI/CD Deploy Automatico OK - v1"))
+app.MapGet("/wellcome", () => Results.Text("ClyvoVet Sprint 4 - Deploy Automatico Verificado v2"))
    .WithName("Wellcome")
    .WithTags("Health")
    .Produces<string>(StatusCodes.Status200OK)
