@@ -1,10 +1,20 @@
 # ENTREGA DE PROJETO — DEVOPS TOOLS & CLOUD COMPUTING (SPRINT 4)
 
+### Descricao do Projeto:
+```text
+Projeto para entrega da Sprint 4 do professor <NOME_DO_PROFESSOR>
+RM564361 - João Henrique Batista Leal - 2TDSPG
+RM565771 - Erik Naoki Miyasato - 2TDSPG
+RM562267 - Gutemberg Rocha Silva - 2TDSPG
+RM561650 - Gustavo Arthur Carvalho Sartori - 2TDSPG
+RM561171 - Juliana da Silva Stigliani - 2TDSPG
+```
+
 ### Instituicao:
 **FIAP — Faculdade de Informatica e Administracao Paulista**
 
 ### Disciplina:
-**DevOps Tools & Cloud Computing — Professor Joao Menk (`profjoao.menk@fiap.com.br`)**
+**DevOps Tools & Cloud Computing — Professor `<NOME_DO_PROFESSOR>` (`<EMAIL_DO_PROFESSOR>`)**
 
 ### Turma:
 **2TDSPG**

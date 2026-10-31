@@ -9,7 +9,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>
 endobj
 4 0 obj
-<< /Length 1782 >>
+<< /Length 1787 >>
 stream
 BT
 /F1 16 Tf
@@ -19,7 +19,7 @@ BT
 0 -24 Td
 (Instituicao: FIAP - Faculdade de Informatica e Administracao Paulista) Tj
 0 -16 Td
-(Disciplina: DevOps Tools & Cloud Computing - Prof. Joao Menk \(profjoao.menk@fiap.com.br\)) Tj
+(Disciplina: DevOps Tools & Cloud Computing - Prof. <NOME_DO_PROFESSOR> \(<EMAIL_DO_PROFESSOR>\)) Tj
 0 -16 Td
 (Projeto / Solucao: ClyvoVet \(ByteCare\) - Turma: 2TDSPG) Tj
 /F1 13 Tf
@@ -86,10 +86,10 @@ xref
 0000000058 00000 n 
 0000000115 00000 n 
 0000000251 00000 n 
-0000002085 00000 n 
-0000002160 00000 n 
+0000002090 00000 n 
+0000002165 00000 n 
 trailer
 << /Size 7 /Root 1 0 R >>
 startxref
-2230
+2235
 %%EOF

@@ -8,6 +8,15 @@
 
 ## 1. Integrantes do Grupo (Turma 2TDSPG)
 
+```text
+Projeto para entrega da Sprint 4 do professor <NOME_DO_PROFESSOR>
+RM564361 - João Henrique Batista Leal - 2TDSPG
+RM565771 - Erik Naoki Miyasato - 2TDSPG
+RM562267 - Gutemberg Rocha Silva - 2TDSPG
+RM561650 - Gustavo Arthur Carvalho Sartori - 2TDSPG
+RM561171 - Juliana da Silva Stigliani - 2TDSPG
+```
+
 | Nome Completo | RM | Turma |
 | :--- | :---: | :---: |
 | **Erik Naoki Miyasato** | 565771 | 2TDSPG |

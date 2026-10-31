@@ -193,14 +193,14 @@ Para cada uma das **9 Etapas** executadas, este relatorio detalha:
 * Padronizacao da branch principal para **`master`** localmente, no **GitHub** (`https://github.com/JoaoHBatistaLeal/clyvo-sprint-4-devops.git`) e no **Azure Repos** (`https://dev.azure.com/OrgJJEGG/Sprint%204%20-%20Azure%20DevOps/_git/Sprint%204%20-%20Azure%20DevOps`).
 * Configuracao de **Dual-Push** no remote `origin` do Git local, permitindo que um unico comando `git push origin master` publique simultaneamente os commits no GitHub e no Azure Repos.
 * Configuracao da organizacao `OrgJJEGG` e do projeto **`Sprint 4 - Azure DevOps`** (Visibilidade: `Private`, Controle de Versao: `Git`, Processo: `Agile`).
-* Inclusao e configuracao de permissoes do professor avaliador **Joao Carlos Menk** (`profjoao.menk@fiap.com.br`):
+* Inclusao e configuracao de permissoes do professor avaliador **<NOME_DO_PROFESSOR>** (`<EMAIL_DO_PROFESSOR>`):
   * Nivel de Acesso (Access Level) na Organizacao `OrgJJEGG`: **Basic (`express`)**;
   * Grupo de Seguranca no Projeto `Sprint 4 - Azure DevOps`: **Project Administrators** e **Contributors**;
   * Inclusao dos 5 alunos integrantes do grupo no grupo **Project Administrators**.
 
 #### 2. Como foi feito
 * A branch default do GitHub foi alterada para `master` via API antes da remocao de qualquer branch secundaria (`main`), garantindo que apenas `refs/heads/master` exista nos dois servidores remotos.
-* No Azure DevOps, como a conta institucional do professor no Entra ID da FIAP possuia UPN distinto do alias de e-mail (`profjoao.menk@fiap.com.br`), foi realizada a resolucao do `originId` (`2c6661b3-2e04-4eee-b4cd-8b997426c8bb`) via API IdentityPicker do Azure DevOps e o provisionamento direto do User Entitlement com licenca `express` (Basic) e alocacao no grupo `Project Administrators` via API Graph.
+* No Azure DevOps, como a conta institucional do professor no Entra ID da FIAP possuia UPN distinto do alias de e-mail (`<EMAIL_DO_PROFESSOR>`), foi realizada a resolucao do `originId` (`2c6661b3-2e04-4eee-b4cd-8b997426c8bb`) via API IdentityPicker do Azure DevOps e o provisionamento direto do User Entitlement com licenca `express` (Basic) e alocacao no grupo `Project Administrators` via API Graph.
 
 #### 3. Por que foi feito
 * A sincronizacao automatica entre GitHub e Azure Repos (Dual-Push) evita divergencia de codigo entre os dois repositorios avaliados na entrega.
@@ -280,5 +280,5 @@ Execucao e comprovacao da bateria de **3 Testes Fim a Fim (End-to-End)** diretam
 | **Infraestrutura Azure (IaC)** | `infra/criar-infra.ps1` (`rg-clyvo-sprint4`) | Online (`Running`) | Ambiente PaaS reprodutivel no Azure (`clyvo-sprint4-rm564361` + `pg-clyvo-sprint4`) |
 | **Pipeline CI/CD** | `azure-pipelines.yml` (`ClyvoVet-CI-CD`) | Build #1 e #2 `Succeeded` | Build, testes xUnit, publicacao de artefato `.zip`, injecao de segredos e deploy automatico |
 | **Documentacao e Diagrama** | `README.md`, `PROGRESS.md`, `docs/arquitetura.png`, PDF | Concluido | Rastreabilidade completa do fluxo DevOps (passos 1 a 12) e guia tecnico detalhado |
-| **Governanca & Acessos** | Branch `master` (Dual-Push) + `profjoao.menk@fiap.com.br` | Sincronizado e Ativo | Paridade total GitHub/Azure Repos e acesso Basic + Project Administrator para o avaliador |
+| **Governanca & Acessos** | Branch `master` (Dual-Push) + `<EMAIL_DO_PROFESSOR>` | Sincronizado e Ativo | Paridade total GitHub/Azure Repos e acesso Basic + Project Administrator para o avaliador |
 | **Validacao End-to-End** | Smoke Test + Trigger CI/CD + CRUD PaaS | 100% Verificado | Comprovacao real de persistencia e deploy continuo na URL publica do Azure |
