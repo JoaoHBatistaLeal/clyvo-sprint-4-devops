@@ -5,6 +5,8 @@ trigger:
   paths:
     exclude:
       - README.md
+      - PROGRESS.md
+      - ENTREGA_PROJETO.md
       - docs/*
 
 pr: none
