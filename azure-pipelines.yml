@@ -1,0 +1,124 @@
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    exclude:
+      - README.md
+      - docs/*
+
+pr: none
+
+variables:
+  buildConfiguration: 'Release'
+  azureSubscription: 'azure-clyvo-sprint4'
+  apiProject: '**/ClyvoVetChallenge.Api.csproj'
+  testProjects: '**/*Tests*.csproj'
+  artifactName: 'app'
+
+stages:
+- stage: BuildTestes
+  displayName: 'CI - Build e Testes'
+  jobs:
+    - job: BuildTest
+      displayName: 'Compilar, testar e gerar artefato da API'
+      pool:
+        name: 'Default'
+      steps:
+        - checkout: self
+
+        - task: UseDotNet@2
+          displayName: 'Configurar .NET SDK'
+          inputs:
+            packageType: 'sdk'
+            version: '9.x'
+
+        - task: DotNetCoreCLI@2
+          displayName: 'Restaurar dependencias (Restore)'
+          inputs:
+            command: 'restore'
+            projects: '**/*.sln'
+
+        - task: DotNetCoreCLI@2
+          displayName: 'Compilar API (Build)'
+          inputs:
+            command: 'build'
+            projects: '$(apiProject)'
+            arguments: '--configuration $(buildConfiguration)'
+
+        - task: DotNetCoreCLI@2
+          displayName: 'Executar Testes Automatizados (xUnit)'
+          inputs:
+            command: 'test'
+            projects: '$(testProjects)'
+            arguments: '--configuration $(buildConfiguration)'
+            testRunTitle: 'Testes Automatizados ClyvoVet'
+
+        - task: DotNetCoreCLI@2
+          displayName: 'Publicar API (Publish)'
+          inputs:
+            command: 'publish'
+            publishWebProjects: false
+            projects: '$(apiProject)'
+            arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish'
+            zipAfterPublish: false
+            modifyOutputPath: false
+
+        - task: ArchiveFiles@2
+          displayName: 'Compactar Aplicacao (ZIP)'
+          inputs:
+            rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/publish'
+            includeRootFolder: false
+            archiveType: 'zip'
+            archiveFile: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
+            replaceExistingArchive: true
+
+        - task: PublishPipelineArtifact@1
+          displayName: 'Publicar Artefato no Azure DevOps'
+          inputs:
+            targetPath: '$(Build.ArtifactStagingDirectory)/$(artifactName).zip'
+            artifact: '$(artifactName)'
+            publishLocation: 'pipeline'
+
+- stage: Deploy
+  displayName: 'CD - Deploy no Azure App Service'
+  dependsOn: BuildTestes
+  condition: succeeded()
+  jobs:
+    - job: DeployWebApp
+      displayName: 'Implantar API no Azure Web App'
+      pool:
+        name: 'Default'
+      steps:
+        - checkout: none
+
+        - task: DownloadPipelineArtifact@2
+          displayName: 'Baixar Artefato Publicado'
+          inputs:
+            buildType: 'current'
+            artifactName: '$(artifactName)'
+            targetPath: '$(Pipeline.Workspace)/$(artifactName)'
+
+        - task: AzureAppServiceSettings@1
+          displayName: 'Configurar Variaveis Protegidas no App Service'
+          inputs:
+            azureSubscription: '$(azureSubscription)'
+            appName: '$(NOME_WEBAPP)'
+            resourceGroupName: 'rg-clyvo-sprint4'
+            appSettings: |
+              [
+                { "name": "ASPNETCORE_ENVIRONMENT", "value": "$(ASPNETCORE_ENVIRONMENT)", "slotSetting": false },
+                { "name": "ConnectionStrings__OracleConnection", "value": "$(OracleConnection)", "slotSetting": false },
+                { "name": "ConnectionStrings__DefaultConnection", "value": "$(OracleConnection)", "slotSetting": false },
+                { "name": "JWT_SECRET", "value": "$(JWT_SECRET)", "slotSetting": false },
+                { "name": "Jwt__Key", "value": "$(JWT_SECRET)", "slotSetting": false }
+              ]
+
+        - task: AzureWebApp@1
+          displayName: 'Deploy da API via ZipDeploy'
+          inputs:
+            azureSubscription: '$(azureSubscription)'
+            appType: 'webApp'
+            appName: '$(NOME_WEBAPP)'
+            package: '$(Pipeline.Workspace)/$(artifactName)/$(artifactName).zip'
+            deploymentMethod: 'zipDeploy'
