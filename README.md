@@ -2,7 +2,6 @@
 
 **Instituicao:** FIAP — Faculdade de Informatica e Administracao Paulista  
 **Disciplina:** DevOps Tools & Cloud Computing — 4a Sprint (2026)  
-**Professor Avaliador:** Joao Menk (`profjoao.menk@fiap.com.br`)  
 **Turma:** 2TDSPG  
 
 ---
