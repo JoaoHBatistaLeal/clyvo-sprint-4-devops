@@ -1,0 +1,95 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 1782 >>
+stream
+BT
+/F1 16 Tf
+50 760 Td
+(ENTREGA OFICIAL - SPRINT 4: DEVOPS TOOLS & CLOUD COMPUTING) Tj
+/F2 11 Tf
+0 -24 Td
+(Instituicao: FIAP - Faculdade de Informatica e Administracao Paulista) Tj
+0 -16 Td
+(Disciplina: DevOps Tools & Cloud Computing - Prof. Joao Menk \(profjoao.menk@fiap.com.br\)) Tj
+0 -16 Td
+(Projeto / Solucao: ClyvoVet \(ByteCare\) - Turma: 2TDSPG) Tj
+/F1 13 Tf
+0 -32 Td
+(1. INTEGRANTES DO GRUPO \(TURMA 2TDSPG\)) Tj
+/F2 11 Tf
+0 -20 Td
+(- Erik Naoki Miyasato - RM: 565771 - Turma: 2TDSPG) Tj
+0 -16 Td
+(- Gustavo Arthur Carvalho Sartori - RM: 561650 - Turma: 2TDSPG) Tj
+0 -16 Td
+(- Gutemberg Rocha Silva - RM: 562267 - Turma: 2TDSPG) Tj
+0 -16 Td
+(- Joao Henrique Batista Leal - RM: 564361 - Turma: 2TDSPG) Tj
+0 -16 Td
+(- Juliana da Silva Stigliani - RM: 561171 - Turma: 2TDSPG) Tj
+/F1 13 Tf
+0 -32 Td
+(2. LINKS OFICIAIS DA ENTREGA) Tj
+/F1 11 Tf
+0 -22 Td
+(2.1. Link do Repositorio no GitHub \(Branch master\):) Tj
+/F2 11 Tf
+0 -16 Td
+(https://github.com/JoaoHBatistaLeal/clyvo-sprint-4-devops) Tj
+/F1 11 Tf
+0 -24 Td
+(2.2. Link do Video no YouTube \(Modo Nao listado\):) Tj
+/F2 11 Tf
+0 -16 Td
+(https://youtu.be/MEtaddtCgEw) Tj
+/F1 11 Tf
+0 -24 Td
+(2.3. Link do Projeto no Azure DevOps:) Tj
+/F2 11 Tf
+0 -16 Td
+(https://dev.azure.com/OrgJJEGG/Sprint%204%20-%20Azure%20DevOps) Tj
+/F1 11 Tf
+0 -24 Td
+(2.4. Links da Aplicacao Publicada na Nuvem \(Azure App Service\):) Tj
+/F2 11 Tf
+0 -16 Td
+(URL Base: https://clyvo-sprint4-rm564361.azurewebsites.net) Tj
+0 -16 Td
+(Swagger UI: https://clyvo-sprint4-rm564361.azurewebsites.net/swagger/index.html) Tj
+0 -16 Td
+(Rota de Teste CI/CD: https://clyvo-sprint4-rm564361.azurewebsites.net/wellcome) Tj
+0 -16 Td
+(Health Check: https://clyvo-sprint4-rm564361.azurewebsites.net/health) Tj
+ET
+
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000002085 00000 n 
+0000002160 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+2230
+%%EOF
