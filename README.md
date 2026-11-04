@@ -77,23 +77,21 @@ O **ClyvoVet** e uma plataforma corporativa e API RESTful desenvolvida em **.NET
 
 ![Diagrama de Arquitetura e Fluxo CI/CD](docs/arquitetura.png)
 
-### Tabela Descritiva do Fluxo Integrado de Arquitetura e CI/CD (Passos 1 a 12):
+### Tabela Descritiva do Fluxo Integrado de Arquitetura e CI/CD (Passos 1 a 11):
 
 | Passo | Etapa / Componente | Descricao Tecnica Detalhada |
 | :---: | :--- | :--- |
-| **1** | **Dev faz push na branch `master`** | O desenvolvedor realiza alteracoes no codigo C# .NET localmente, valida com `dotnet test` e executa `git push origin master`. |
-| **2** | **Sincronizacao GitHub / Azure Repos** | O Git local configurado com Dual-Push envia os commits simultaneamente para o GitHub (`clyvo-sprint-4-devops`) e para o Azure Repos (`Sprint 4 - Azure DevOps`) na branch `master`. |
-| **3** | **Trigger automatico do CI** | O Azure DevOps detecta o novo commit na branch `master` (ignorando alteracoes exclusivas em `README.md` ou `docs/*`) e inicia imediatamente o estagio `BuildTestes` (`CI - Build e Testes`). |
-| **4** | **Restore & Build** | O agente executa `UseDotNet@2` (SDK `9.x`) seguido de `DotNetCoreCLI@2` para restaurar os pacotes NuGet (`restore`) e compilar a API em modo `Release` (`build --configuration Release`). |
-| **5** | **Execucao de Testes xUnit** | A tarefa `DotNetCoreCLI@2` (`command: test`) executa os **140 testes automatizados** (`**/*Tests*.csproj`) e publica automaticamente o relatorio de resultados na aba **Tests** do Azure DevOps sob o titulo `Testes Automatizados ClyvoVet`. |
-| **6** | **Empacotamento e publicacao do artefato `app.zip`** | Apos 100% de aprovacao nos testes, a pipeline executa `dotnet publish`, compacta os binarios com `ArchiveFiles@2` gerando `$(Build.ArtifactStagingDirectory)/app.zip` e publica o artefato `app` via `PublishPipelineArtifact@1`. |
-| **7** | **Disparo automatico do CD** | Condicionado ao sucesso do estagio de CI (`dependsOn: BuildTestes` e `condition: succeeded()`), o estagio `Deploy` (`CD - Deploy no Azure App Service`) inicia automaticamente. |
-| **8** | **Autenticacao via Service Connection `azure-clyvo-sprint4`** | O job `DeployWebApp` baixa o artefato `app` (`DownloadPipelineArtifact@2`) e autentica na assinatura `2026-2TDSPJ-JOAO-H-BATISTA-LEAL-RM564361` usando a Service Connection `azure-clyvo-sprint4`. |
-| **9** | **Injecao de Variaveis Secretas nas App Settings** | A tarefa `AzureAppServiceSettings@1` injeta de forma segura no Web App `clyvo-sprint4-rm564361` as variaveis secretas da pipeline (`OracleConnection` / `DefaultConnection`, `JWT_SECRET` / `Jwt__Key` e `ASPNETCORE_ENVIRONMENT=Production`). |
-| **10** | **Zip Deploy no Azure Web App** | A tarefa `AzureWebApp@1` realiza o deploy atomico (`deploymentMethod: zipDeploy`) do pacote `app.zip` para o Azure Web App `clyvo-sprint4-rm564361` no Resource Group `rg-clyvo-sprint4`. |
-| **11** | **Consumo via HTTPS / Swagger pelo Usuario Final** | O usuario final ou avaliador acessa a aplicacao diretamente na nuvem via HTTPS (`/swagger/index.html`, `/wellcome`, `/health` e endpoints REST) sem qualquer dependencia de `localhost`. |
-| **12** | **Persistencia no Banco em Nuvem** | O Azure Web App aplica automaticamente as Migrations do EF Core e executa todas as operacoes de CRUD (`INSERT`, `SELECT`, `UPDATE`, `DELETE`) diretamente no banco de dados relacional em nuvem (`db_clyvovet` em `pg-clyvo-sprint4.postgres.database.azure.com`). |
-
+| **1** | **Commit Local (VS Code / Git)** | O desenvolvedor realiza alteracoes no codigo C# .NET localmente, valida com `dotnet test` e executa commit na branch `master`. |
+| **2** | **Dual-Push Sincronizado** | O Git local configurado com Dual-Push envia os commits simultaneamente para o GitHub (`clyvo-sprint-4-devops`) e para o Azure Repos (`Sprint 4 - Azure DevOps`) na branch `master`. |
+| **3** | **Gatilho CI Automatico** | O Azure DevOps detecta o novo commit na branch `master` (ignorando alteracoes exclusivas em `README.md` ou `docs/*`) e dispara automaticamente o estagio `BuildTestes` (`CI - Build e Testes`). |
+| **4** | **Build & Testes xUnit (Agent Pool Default)** | O agente `agent-clyvo-sprint4` executa `UseDotNet@2` (SDK 9.x), `restore`, compilacao em `Release` e executa os **140 testes automatizados** xUnit (104 Unit + 36 Integration). |
+| **5** | **Publicacao de Artefato Imutavel (`app.zip`)** | Gera o pacote compilado da API, compacta em `app.zip` e publica o artefato `app` via `PublishPipelineArtifact@1`, publicando o relatorio de testes na aba **Tests** do Azure DevOps. |
+| **6** | **Gatilho CD Automatico** | Com a aprovacao de 100% dos testes e do estagio de CI (`dependsOn: BuildTestes`), o estagio `Deploy` (`CD - Deploy no Azure App Service`) inicia e faz download do artefato `app.zip`. |
+| **7** | **Governanca & Segredos (Service Connection)** | A pipeline autentica na assinatura Azure via Service Connection `azure-clyvo-sprint4` (Workload Identity Federation) e injeta as variaveis protegidas de conexao e JWT. |
+| **8** | **Deploy em Producao (Azure Web App)** | A task `AzureWebApp@1` realiza a implantacao atomica via `zipDeploy` do pacote `app.zip` no Azure Web App `clyvo-sprint4-rm564361` (`ASPNETCORE_ENVIRONMENT=Production`). |
+| **9** | **Persistencia PaaS (EF Core / Npgsql)** | O Web App conecta ao Azure Database for PostgreSQL Flexible Server (`pg-clyvo-sprint4.postgres.database.azure.com` / `db_clyvovet`) via TCP 5432 com SSL obrigatorio. |
+| **10** | **Consumo HTTPS pelo Usuario Final** | O usuario final e o avaliador consomem a API diretamente na nuvem via HTTPS (`/swagger/index.html`, `/wellcome`, `/health` e endpoints CRUD RESTful). |
+| **11** | **Auditoria de Banco de Dados (Cliente SQL)** | Comprovacao fisica direta de persistencia (INSERT, SELECT, UPDATE, DELETE) executando queries `SELECT` no banco em nuvem via DBeaver / pgAdmin. |
 ---
 
 ## 6. Estrutura do Banco de Dados em Nuvem (`script_bd.sql`)
@@ -186,8 +184,11 @@ clyvo-sprint-4-devops/
 ├── ClyvoVetChallenge.Tests.Unit/          104 Testes Unitarios (xUnit + Moq no padrao AAA)
 ├── ClyvoVetChallenge.Tests.Integration/   36 Testes de Integracao da API (WebApplicationFactory + SQLite isolado)
 ├── docs/
-│   ├── arquitetura.png                    Diagrama da Arquitetura em Nuvem e Fluxo CI/CD numerado (1 a 12)
+│   ├── arquitetura.png                    Diagrama da Arquitetura em Nuvem e Fluxo CI/CD numerado (1 a 11)
+│   ├── architecture/azure_architecture.png Espelho em alta resolucao do diagrama arquitetural
 │   └── swagger.json                       Especificacao OpenAPI 3.0 exportada automaticamente pelos testes
+├── scripts/
+│   └── gerar_diagrama_arquitetura.py      Script Python gerador do diagrama oficial com biblioteca diagrams
 ├── infra/
 │   └── criar-infra.ps1                    Script Azure CLI de provisionamento PaaS (RG, App Service Plan F1, Web App)
 ├── sql/
