@@ -17,6 +17,8 @@ variables:
   apiProject: '**/ClyvoVetChallenge.Api.csproj'
   testProjects: '**/*Tests*.csproj'
   artifactName: 'app'
+  NOME_WEBAPP: 'clyvo-sprint4-rm564361'
+  ASPNETCORE_ENVIRONMENT: 'Production'
   AUTH_USERNAME: 'admin'
   KEY_VAULT_NAME: 'kv-bytecare-564361'
   KEY_VAULT_URI: 'https://kv-bytecare-564361.vault.azure.net/'
