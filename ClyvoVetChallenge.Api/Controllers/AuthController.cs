@@ -38,16 +38,23 @@ public class AuthController(IConfiguration configuration, ITokenService tokenSer
         var expectedPassword = configuration["Auth:Password"]
             ?? configuration["Auth--Password"]
             ?? configuration["AUTH_PASSWORD"]
-            ?? Environment.GetEnvironmentVariable("AUTH_PASSWORD")
-            ?? "DwRdjP8mvjBU3mih!A1";
+            ?? Environment.GetEnvironmentVariable("AUTH_PASSWORD");
+
+        if (string.IsNullOrWhiteSpace(expectedPassword))
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new ProblemDetails
+            {
+                Type = "about:blank",
+                Title = "Erro de configuracao",
+                Status = StatusCodes.Status500InternalServerError,
+                Detail = "A senha administrativa nao foi configurada no ambiente."
+            });
+        }
 
         var isUsernameValid = request.Username.Equals(expectedUsername, StringComparison.OrdinalIgnoreCase)
-            || request.Username.Equals("admin", StringComparison.OrdinalIgnoreCase)
-            || request.Username.Equals("bytecare_admin", StringComparison.OrdinalIgnoreCase);
+            || request.Username.Equals("admin", StringComparison.OrdinalIgnoreCase);
 
-        var isPasswordValid = request.Password == expectedPassword
-            || request.Password == "DwRdjP8mvjBU3mih!A1"
-            || request.Password == "ClyvoVet@2026!";
+        var isPasswordValid = request.Password == expectedPassword;
 
         if (!isUsernameValid || !isPasswordValid)
         {
