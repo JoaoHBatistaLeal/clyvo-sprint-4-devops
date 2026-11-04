@@ -1,15 +1,14 @@
-# ClyvoVet API — DevOps Tools & Cloud Computing (Sprint 4)
+# ClyvoVet API — DevOps Tools & Cloud Computing
 
 **Instituicao:** FIAP — Faculdade de Informatica e Administracao Paulista  
-**Disciplina:** DevOps Tools & Cloud Computing — 4a Sprint (2026)  
+**Disciplina:** DevOps Tools & Cloud Computing — 4a Sprint 
 **Turma:** 2TDSPG  
 
 ---
 
-## 1. Integrantes do Grupo (Turma 2TDSPG)
+## 1. Integrantes do Grupo
 
 ```text
-Projeto para entrega da Sprint 4 do professor <NOME_DO_PROFESSOR>
 RM564361 - João Henrique Batista Leal - 2TDSPG
 RM565771 - Erik Naoki Miyasato - 2TDSPG
 RM562267 - Gutemberg Rocha Silva - 2TDSPG
@@ -39,7 +38,7 @@ RM561171 - Juliana da Silva Stigliani - 2TDSPG
 | **Projeto no Azure DevOps** | Organizacao `OrgJJEGG` / Projeto `Sprint 4 - Azure DevOps` | https://dev.azure.com/OrgJJEGG/Sprint%204%20-%20Azure%20DevOps |
 | **Repositorio GitHub (Entrega DevOps)** | Repositorio oficial na branch `master` com CI/CD e IaC | https://github.com/JoaoHBatistaLeal/clyvo-sprint-4-devops |
 | **Repositorio GitHub (Codigo Fonte C#)** | Repositorio base da solucao em .NET | https://github.com/JoaoHBatistaLeal/clyvovet-csharp |
-| **Video de Demonstracao (YouTube)** | Apresentacao tecnica da esteira CI/CD e CRUD em nuvem | https://youtu.be/MEtaddtCgEw |
+| **Video de Demonstracao (YouTube)** | Apresentacao tecnica da esteira CI/CD e CRUD em nuvem | https://youtu.be/<url> |
 
 ---
 
@@ -108,23 +107,7 @@ O script DDL e DML completo encontra-se versionado na raiz do repositorio em [`s
 
 ### Queries `SELECT` de Auditoria para Comprovacao do CRUD no Video:
 ```sql
-SELECT "Id", "Nome", "Cpf", "Email", "Telefone", "DataNascimento", "Endereco", "CreatedAt", "Active"
-FROM "TB_DONO"
-ORDER BY "CreatedAt" DESC;
-
-SELECT "Id", "DonoId", "Nome", "Especie", "Raca", "Sexo", "DataNascimento", "Peso", "CreatedAt", "Active"
-FROM "TB_ANIMAL"
-ORDER BY "CreatedAt" DESC;
-
-SELECT "Id", "AnimalId", "VeterinarioId", "ClinicaId", "DataConsulta", "HoraConsulta", "Motivo", "Diagnostico", "Status", "Tipo"
-FROM "TB_CONSULTA"
-ORDER BY "CreatedAt" DESC;
-
-SELECT a."Id" AS "AnimalId", a."Nome" AS "NomePet", a."Especie", a."Raca", a."Peso",
-       d."Id" AS "TutorId", d."Nome" AS "NomeTutor", d."Cpf", d."Email"
-FROM "TB_ANIMAL" a
-INNER JOIN "TB_DONO" d ON a."DonoId" = d."Id"
-ORDER BY a."CreatedAt" DESC;
+SELECT * FROM TB_DONO;
 ```
 
 ---
@@ -137,10 +120,10 @@ Em conformidade estrita com as regras da disciplina, **nenhuma senha, connection
 | :--- | :--- | :---: | :--- |
 | `NOME_WEBAPP` | Parametro de destino (`clyvo-sprint4-rm564361`) | Visivel | Define o nome do Azure Web App alvo nas tasks de configuracao e ZipDeploy |
 | `ASPNETCORE_ENVIRONMENT` | `ASPNETCORE_ENVIRONMENT` (`Production`) | Visivel | Define o ambiente de execucao do ASP.NET Core no Azure App Service |
-| `OracleConnection` | `ConnectionStrings__OracleConnection` e `ConnectionStrings__DefaultConnection` | **Secret (Cadeado Ativado)** | String de conexao real com o banco de dados relacional em nuvem |
-| `JWT_SECRET` | `JWT_SECRET` e `Jwt__Key` | **Secret (Cadeado Ativado)** | Chave simetrica de 256+ bits para assinatura e validacao de tokens JWT |
+| `OracleConnection` | `ConnectionStrings__OracleConnection` e `ConnectionStrings__DefaultConnection` | **Secret** | String de conexao real com o banco de dados relacional em nuvem |
+| `JWT_SECRET` | `JWT_SECRET` e `Jwt__Key` | **Secret ** | Chave simetrica de 256+ bits para assinatura e validacao de tokens JWT |
 | `AUTH_USERNAME` | `AUTH_USERNAME` e `Auth__Username` (`admin`) | Visivel | Usuario administrador padrao para autenticacao JWT no endpoint `/api/Auth/login` |
-| `AUTH_PASSWORD` | `AUTH_PASSWORD` e `Auth__Password` | **Secret (Cadeado Ativado)** | Senha administrativa protegida e sincronizada com o Azure Key Vault |
+| `AUTH_PASSWORD` | `AUTH_PASSWORD` e `Auth__Password` | **Secret** | Senha administrativa protegida e sincronizada com o Azure Key Vault |
 | `KEY_VAULT_NAME` | `KEY_VAULT_NAME` (`kv-bytecare-564361`) | Visivel | Nome do cofre Azure Key Vault integrado a aplicacao via Managed Identity |
 | `KEY_VAULT_URI` | `KEY_VAULT_URI` | Visivel | URI HTTPS do Azure Key Vault para carregamento seguro de segredos |
 
