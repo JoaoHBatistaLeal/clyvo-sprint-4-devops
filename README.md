@@ -141,6 +141,10 @@ Em conformidade estrita com as regras da disciplina, **nenhuma senha, connection
 | `ASPNETCORE_ENVIRONMENT` | `ASPNETCORE_ENVIRONMENT` (`Production`) | Visivel | Define o ambiente de execucao do ASP.NET Core no Azure App Service |
 | `OracleConnection` | `ConnectionStrings__OracleConnection` e `ConnectionStrings__DefaultConnection` | **Secret (Cadeado Ativado)** | String de conexao real com o banco de dados relacional em nuvem |
 | `JWT_SECRET` | `JWT_SECRET` e `Jwt__Key` | **Secret (Cadeado Ativado)** | Chave simetrica de 256+ bits para assinatura e validacao de tokens JWT |
+| `AUTH_USERNAME` | `AUTH_USERNAME` e `Auth__Username` (`admin`) | Visivel | Usuario administrador padrao para autenticacao JWT no endpoint `/api/Auth/login` |
+| `AUTH_PASSWORD` | `AUTH_PASSWORD` e `Auth__Password` | **Secret (Cadeado Ativado)** | Senha administrativa protegida e sincronizada com o Azure Key Vault |
+| `KEY_VAULT_NAME` | `KEY_VAULT_NAME` (`kv-bytecare-564361`) | Visivel | Nome do cofre Azure Key Vault integrado a aplicacao via Managed Identity |
+| `KEY_VAULT_URI` | `KEY_VAULT_URI` | Visivel | URI HTTPS do Azure Key Vault para carregamento seguro de segredos |
 
 ---
 

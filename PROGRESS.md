@@ -222,12 +222,17 @@ Para cada uma das **9 Etapas** executadas, este relatorio detalha:
   * `ASPNETCORE_ENVIRONMENT` = `Production` (Texto aberto)
   * `OracleConnection` = String de conexao completa do PostgreSQL PaaS (**Secret / Cadeado fechado**: `isSecret: true`)
   * `JWT_SECRET` = Chave criptografica de assinatura JWT (**Secret / Cadeado fechado**: `isSecret: true`)
+  * `AUTH_USERNAME` = `admin` (Texto aberto)
+  * `AUTH_PASSWORD` = Senha administrativa sincronizada com Azure Key Vault (**Secret / Cadeado fechado**: `isSecret: true`)
+  * `KEY_VAULT_NAME` = `kv-bytecare-564361` (Texto aberto)
+  * `KEY_VAULT_URI` = `https://kv-bytecare-564361.vault.azure.net/` (Texto aberto)
 * Provisionamento e ativacao do **Self-Hosted Agent** (`agent-clyvo-sprint4`) no Agent Pool `Default` para execucao imediata dos jobs de CI e CD.
 * Execucao completa da **Build #1 (`20261031.1`)**, obtendo status **`succeeded` (100% verde)** nos estagios `CI - Build e Testes` e `CD - Deploy no Azure App Service`.
 
 #### 2. Como foi feito
 * Como organizacoes recem-criadas no Azure DevOps possuem paralelismo gratuito `0` em agentes Microsoft-hosted ate aprovacao manual de formulario pela Microsoft, foi instalado e registrado o agente oficial do Azure Pipelines (`vsts-agent-win-x64-4.269.0`) em `C:\azagent` conectado ao pool `Default` da organizacao `OrgJJEGG`.
 * As variaveis secretas foram registradas na definicao da pipeline com a propriedade `isSecret: true`, fazendo com que o Azure DevOps mascare qualquer ocorrencia de seus valores nos logs de console como `***`.
+* Foi ativada a Identidade Gerenciada Atribuida pelo Sistema (System-Assigned Managed Identity) no Azure Web App e atribuida a role RBAC `Key Vault Secrets User` no cofre `kv-bytecare-564361`, permitindo consumo direto de segredos em runtime.
 
 #### 3. Por que foi feito
 * A utilizacao de Workload Identity Federation na Service Connection `azure-clyvo-sprint4` elimina a necessidade de gerenciar senhas de Service Principal com data de expiracao.

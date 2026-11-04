@@ -17,6 +17,9 @@ variables:
   apiProject: '**/ClyvoVetChallenge.Api.csproj'
   testProjects: '**/*Tests*.csproj'
   artifactName: 'app'
+  AUTH_USERNAME: 'admin'
+  KEY_VAULT_NAME: 'kv-bytecare-564361'
+  KEY_VAULT_URI: 'https://kv-bytecare-564361.vault.azure.net/'
 
 stages:
 - stage: BuildTestes
@@ -113,7 +116,13 @@ stages:
                 { "name": "ConnectionStrings__OracleConnection", "value": "$(OracleConnection)", "slotSetting": false },
                 { "name": "ConnectionStrings__DefaultConnection", "value": "$(OracleConnection)", "slotSetting": false },
                 { "name": "JWT_SECRET", "value": "$(JWT_SECRET)", "slotSetting": false },
-                { "name": "Jwt__Key", "value": "$(JWT_SECRET)", "slotSetting": false }
+                { "name": "Jwt__Key", "value": "$(JWT_SECRET)", "slotSetting": false },
+                { "name": "AUTH_USERNAME", "value": "$(AUTH_USERNAME)", "slotSetting": false },
+                { "name": "AUTH_PASSWORD", "value": "$(AUTH_PASSWORD)", "slotSetting": false },
+                { "name": "Auth__Username", "value": "$(AUTH_USERNAME)", "slotSetting": false },
+                { "name": "Auth__Password", "value": "$(AUTH_PASSWORD)", "slotSetting": false },
+                { "name": "KEY_VAULT_NAME", "value": "$(KEY_VAULT_NAME)", "slotSetting": false },
+                { "name": "KEY_VAULT_URI", "value": "$(KEY_VAULT_URI)", "slotSetting": false }
               ]
 
         - task: AzureWebApp@1
